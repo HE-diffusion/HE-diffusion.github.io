@@ -30,8 +30,7 @@
 
 				<h1>HE-Diffusion: Privacy-Preserving Diffusion Model using Homomorphic Encryption</h1>
 				<div class ="boxed">
-					<p> SurfingAttack exploits ultrasonic guided wave propagating through solid-material tables to attack voice control systems.
-                        we introduce a privacy-preserving stable diffusion framework leveraging homomorphic encryption, called HE-Diffusion, which
+					<p> we introduce a privacy-preserving stable diffusion framework leveraging homomorphic encryption, called HE-Diffusion, which
                         primarily focuses on protecting the denoising phase of the diffusion process. HE-Diffusion is a tailored encryption frame-
                         work specifically designed to align with the unique architecture of stable diffusion, ensuring both privacy and function-
                         ality. To address the inherent computational challenges, we propose a novel min-distortion method that enables efficient
@@ -44,18 +43,19 @@
                         cryptographic techniques with state-of-the-art generative models, paving the way for privacy-preserving and efficient image
                         generation in critical applications.
 					</p>
-					<p style="font-size:20px"><a href="papers/HE-diffusion.pdf">Read the Paper</a>,
-
+					<p style="font-size:20px"><a href="../papers/HE-diffusion.pdf">Read the Paper</a>,
+<!--
 					<a href="#bibtex" data-toggle="collapse" role="button">
 					Cite <i class="fa fa-quote-right" aria-hidden="true"></i></a>
 						<div id="bibtex" style="margin-top: 1.5em;" class="collapse" align="left">
 							<pre style="white-space: pre">
 @inproceedings{yan2020surfingattack,
-    author = {Yan, Qiben and Liu, Kehai and Zhou, Qin and Guo, Hanqing and Zhang, Ning},
+    author = {Chen Yaojian, Yan, Qiben and Liu, Kehai and Zhou, Qin and Guo, Hanqing and Zhang, Ning},
     title = {SurfingAttack: Interactive Hidden Attack on Voice Assistants Using Ultrasonic Guided Wave},
     booktitle={Network and Distributed Systems Security (NDSS) Symposium},
     year = {2020},
 }
+-->
 </pre></p></div>
 				</div>
 
@@ -63,7 +63,7 @@
 				<h1> Team </h1>
 					<div class ="boxed" style="margin-top=3em;">
 						<p>
-							SurfingAttack was discovered by the following team of academic researchers:
+							HE-diffusion was discovered by the following team of academic researchers:
 						</p>
 						<ul>
 							<li><a href=""><strong>Yaojian Chen</strong></a> at <a href="http://seit.egr.msu.edu/">SEIT Lab</a>, <a href="https://www.cse.msu.edu/">Michigan State University</a></li>
@@ -79,11 +79,8 @@
 				<div style = "height:10px"></div>
       </a>
       </div>
-			<a href="https://www.unl.edu/">
-        <img width="160px" src="logos/UNL_Logo.png" alt="UNL logo" class="img-fluid" />
-			</a>
-      <a href="https://cse.wustl.edu/Pages/default.aspx">
-        <img width="160px" src="logos/WUSTL.png" alt="WUSTL logo" class="img-fluid" />
+			<a href="https://www.cs.tsinghua.edu.cn">
+        <img width="160px" src="logos/THU.jpeg" alt="THU logo" class="img-fluid" />
 			</a>
  </div>
 </div>
@@ -104,198 +101,69 @@
 							<br>
 							<br>
 							<br>-->
+							<b> Why is privacy-preserving stable diffusion inference important?</b>
+
+								<p class="answer">
+									In the senario of AI as a service (AIaaS), tasks like texts to images will be applied by majority of users. However, high complexity prevent users from local computation. 
+									The input prompts and the output images may contains users private information, which makes significant risks in hosting computing done on untrusted servers.
+									Privacy-preserving stable diffusion inference aims to protect privace data while utilizing the computation resources of servers.
+												</p>
 							<b> How does HE-diffusion work?</b>
 
 								<p class="answer">
-									SurfingAttack modulates the voice command onto inaudible frequency band, and transmits attack signals using
-									an off-the-shelf PZT transducer (cost $5 per piece) through different types of tables made of solid materials.
+									HE-diffusion applied homomorphic encryption to protect sensitive data. For inputs, users should encode the prompts and do several layers
+									of the model forward. Homomorphic encryption works during denoising to protect outputs. Users can achieve privacy-preserving computation on servers by HE-diffusion.
+									
 												</p>
-					<b>What devices can be compromised by the commands injected via SurfingAttack?</b>
-					<p class="answer">
-									We validated successful SurfingAttack on the following devices, and we believe more devices could be vulnerable. The phones protected by silicone rubber phone cases are also vulnerable.
-												</p>
-
+							<b> Will the generation ability be reduced due to privacy protection? </b>
+								<p class="answer">
+								HE-diffusion can generate images with ignorable loss compared with original stable diffusion. The only approximation happens at the encryption step due to the property of CKKS encryption scheme.
+								In the whole computation process, we only do optimizations which do not change the results and precision.
+													
+																</p>
+							
+							<p> 
+							Results from stable diffusion and HE-diffusion
+							<img "160px" src="../figures/enc_acc.pdf" alt="" class="img-fluid"></p>
+							<b> Can HE-diffusion inference be as fast as stable diffusion? </b>
+								<p class="answer">
+								HE-diffusion has a similar performance with the original stable diffusion. Homomorphic encryption works during denoising, where the computation is not that heavy.
+								Furthermore, we utilized a series of optimizations including partial encryption. Finally, the inference times of HE-diffusion and stable diffusion are at the same order of magnitude.
+													
+																</p>
 					<table>
   				<tr>
-    			  <th>Manufacturer</th>
-    			  <th>Model</th>
-  				  <th>Os/Version</th>
-						<th>Best fc(kHz)</th>
-  				</tr>
-
-  				<tr>
-    				<td>Google</td>
-    				<td>Pixel</td>
-    				<td>Android 10</td>
-						<td>28.2</td>
+    			  <th>Case</th>
+    			  <th>Plain</th>
+  				  <th>Enc</th>
+				  <th>Enc_opt</th>
+				  <th>Sparse</th>
   				</tr>
 
 					<tr>
-    				<td>Google</td>
-    				<td>Pixel 2</td>
-    				<td>Android 10</td>
-						<td>27.0</td>
+    				<td>Denoise once</td>
+    				<td>0.12s</td>
+    				<td>354.34s</td>
+					<td>1.67s</td>
+					<td>0.70s</td>
   				</tr>
 
 					<tr>
-    				<td>Google</td>
-    				<td>Pixel 3</td>
-    				<td>Android 10</td>
-						<td>27.0</td>
+    				<td>Inference (CPU)</td>
+    				<td>0.24h</td>
+    				<td>10.06h</td>
+					<td>0.41h</td>
+					<td>0.32h</td>
   				</tr>
 
 					<tr>
-    				<td>Moto</td>
-    				<td>G5</td>
-    				<td>Android 7.0</td>
-						<td>27.0</td>
-  				</tr>
-
-					<tr>
-    				<td>Moto</td>
-    				<td>Z4</td>
-    				<td>Android 9.0</td>
-						<td>28.2</td>
-  				</tr>
-
-					<tr>
-    				<td>Samsung</td>
-    				<td>Galaxy S7</td>
-    				<td>Android 7.0</td>
-						<td>25.8</td>
-  				</tr>
-
-					<tr>
-						<td>Samsung</td>
-						<td>Galaxy S9</td>
-						<td>Android 9.0</td>
-						<td>26.5</td>
-					</tr>
-
-					<tr>
-    				<td>Xiaomi</td>
-    				<td>Mi 5</td>
-    				<td>Android 8.0</td>
-						<td>28.3</td>
-  				</tr>
-
-					<tr>
-    				<td>Xiaomi</td>
-    				<td>Mi 8</td>
-    				<td>Android 9.0</td>
-						<td>25.6</td>
-  				</tr>
-
-					<tr>
-    				<td>Xiaomi</td>
-    				<td>Mi 8 Lite</td>
-    				<td>Android 9.0</td>
-						<td>25.5</td>
-  				</tr>
-
-					<tr>
-    				<td>Huawei</td>
-    				<td>Honor View 10</td>
-    				<td>Android 9.0</td>
-						<td>27.7</td>
-  				</tr>
-
-					<tr>
-    				<td>Apple</td>
-    				<td>iPhone 5</td>
-    				<td>iOS 10.0.03</td>
-						<td>26.2</td>
-  				</tr>
-
-					<tr>
-    				<td>Apple</td>
-    				<td>iPhone 5s</td>
-    				<td>iOS 12.1.2</td>
-						<td>26.2</td>
-  				</tr>
-
-					<tr>
-    				<td>Apple</td>
-    				<td>iPhone 6+</td>
-    				<td>iOS 11</td>
-						<td>26.0</td>
-  				</tr>
-
-					<tr>
-    				<td>Apple</td>
-    				<td>iPhone X</td>
-    				<td>iOS 12.4.1</td>
-						<td>26.0</td>
+    				<td>Inference (GPU)</td>
+    				<td>35s</td>
+					<td>9.84h</td>
+					<td>203s</td>
+					<td>106s</td>
   				</tr>
 </table><br>
-
-
-							<b> What can the attackers do?</b>
-								<li class="answer">  &#9873  Make fraud call using your phone. </li>
-								<li class="answer">  &#9873  Retrieve your SMS verification code. </li>
-								<li class="answer">  &#9873  Interact with your devices
-									using the voice assistants.</li>
-									<li class="answer">&#9873 And much more... </li>
-						</li><br>
-
-
-						<b> How do you defend against SurfingAttack?</b>
-								<li class="answer">  &#9733 Keep an eye on your devices placed on tabletops. </li>
-								<li class="answer">  &#9733 Reduce the touching surface area of your phones with the table. </li>
-								<li class="answer">  &#9733 Place the device on a soft woven fabric before touching the tabletops. </li>
-								<li class="answer"> &#9733 Use thicker phone cases made of uncommon materials such as wood. </li>
-								<li class="answer">  &#9733 Turn off lock screen personal results (or unlock with voice match) on Android. </li>
-								<li class="answer">  &#9733 Disable your Voice Assistant on lock screen, and lock your device when you put it down. </li>
-						</li>
-						<p></p>
-
-						<p></p>
-
-
 					</ul>
-				<h2>SurfingAttack demonstration</h2>
-	
-				<iframe width="560" height="315" src="https://www.youtube.com/embed/OgJ0ReDA4dE?si=rH6B0Rb8WSZ4BIXj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-
-
-				<h2>Unnoticeable SurfingAttack in a realistic scenario</h2>
-				<h3>(SurfingAttack system including a metal sheet or a glass sheet with attack device is hidden under a tablecloth)</h3>
-				<iframe width="560" height="315" src="https://www.youtube.com/embed/3bLbJP7dpoc?si=9eyopsmA0QzfroOj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-
-					<h1> SurfingAttack on different phones </h1>
-					<div style="margin-top=3em;">
-					<iframe width="390" height="250" src="https://www.youtube.com/embed/UYMcRYHjLGA?si=i-rpbCNZTe6qk2Cw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-					<iframe width="390" height="250" src="https://www.youtube.com/embed/9IdvbuLJEqY?si=QXfjRvfmDaSIMEZJ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-					<iframe width="390" height="250" src="https://www.youtube.com/embed/ijxxh-h8bHQ?si=R4CPIwAgdKAQtGcP" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-					<iframe width="390" height="250" src="https://www.youtube.com/embed/VwoII8S0im8?si=b6_s5yl0ZUIAak-U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-
-
-					</div>
-					<br>
-
-					<h1> SurfingAttack under different scenarios </h1>
-
-					<!--30ft long distance attack on a large Aluminum metal plate-->
-					<h2> 30ft long distance attack on a large Aluminum metal plate </h2>
-					<iframe width="560" height="315" src="https://www.youtube.com/embed/L_9PUsBwsJw?si=1gSCMyWYaiXlr4Zu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-
-					<h2> SurfingAttack on metal plate with different thicknesses</h2>
-					<div style="margin-top=3em;">
-						<!-- 1/4 inch metal -->
-						<iframe width="390" height="250" src="https://www.youtube.com/embed/YfZqXaOxXFM?si=ll8si8yGawHbZ_zr" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-
-						<!-- 1/2 inch metal -->
-						<iframe width="390" height="250" src="https://www.youtube.com/embed/motkZAsyDgA?si=qr1eR6Rhh2dGbH8Q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-
-						<!-- 1 inch metal -->
-						<!--<iframe width="390" height="250" src="https://www.youtube.com/embed/Wyi5E5oFeBE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>-->
-
-						<!-- 3/2 inch metal -->
-						<!--<iframe width="390" height="250" src="https://www.youtube.com/embed/XI02jIRULHE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>-->
-					</div>
-
-
-					<br>
-
 	</body>
 </html>
