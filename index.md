@@ -1,5 +1,5 @@
 ---
-title: Surf Attack
+title: HE-diffusion
 layout: default
 ---
 
