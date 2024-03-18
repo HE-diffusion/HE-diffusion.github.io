@@ -26,22 +26,11 @@
 	</head>
 	<body>
 		<div class = "global_container">
-			<div class = "section"  >
+			<div class = "section">
 
 				<h1>HE-Diffusion: Privacy-Preserving Diffusion Model using Homomorphic Encryption</h1>
 				<div class ="boxed">
-					<p> We introduce a privacy-preserving stable diffusion framework leveraging homomorphic encryption, called HE-Diffusion, which
-                        primarily focuses on protecting the denoising phase of the diffusion process. HE-Diffusion is a tailored encryption frame-
-                        work specifically designed to align with the unique architecture of stable diffusion, ensuring both privacy and function-
-                        ality. To address the inherent computational challenges, we propose a novel min-distortion method that enables efficient
-                        partial image encryption, significantly reducing the overhead without compromising the model’s output quality. Furthermore,
-                        we adopt a sparse tensor representation to expedite computational operations, enhancing the overall efficiency of the 
-                        privacy-preserving diffusion process. We successfully implement the HE-based private preserving stable diffusion inference.
-                        The experimental results show that HE-Diffusion achieves 500 times speedup compared with the baseline method, and reduces
-                        time cost of the homomorphically encrypted inference to the minute level.  Both the performance and accuracy of the 
-                        HE-Diffusion are on par with the plaintext counterpart. Our approach marks a significant step towards integrating advanced
-                        cryptographic techniques with state-of-the-art generative models, paving the way for privacy-preserving and efficient image
-                        generation in critical applications.
+					<p> We introduce a privacy-preserving stable diffusion framework leveraging homomorphic encryption, called HE-Diffusion, which primarily focuses on protecting the denoising phase of the diffusion process. HE-Diffusion is a tailored encryption framework specifically designed to align with the unique architecture of stable diffusion, ensuring both privacy and functionality. To address the inherent computational challenges, we propose a novel min-distortion method that enables efficient partial image encryption, significantly reducing the overhead without compromising the model’s output quality. Furthermore, we adopt a sparse tensor representation to expedite computational operations, enhancing the overall efficiency of the privacy-preserving diffusion process. We successfully implement the HE-based private preserving stable diffusion inference. The experimental results show that HE-Diffusion achieves 500X speedup compared with the baseline method, and reduces time cost of the homomorphically encrypted inference to the minute level.  Both the performance and accuracy of the HE-Diffusion are on par with the plaintext counterpart. Our approach marks a significant step towards integrating advanced cryptographic techniques with state-of-the-art generative models, paving the way for privacy-preserving and efficient image generation in critical applications.
 					</p>
 					<p style="font-size:20px"><a href="https://arxiv.org/pdf/2403.05794.pdf">Read the Paper, </a> <a href="https://github.com/HE-diffusion/HE-diffusion">Code available, </a> 
 					<a href="#bibtex" data-toggle="collapse" role="button">
@@ -105,21 +94,17 @@
 							<b> Why is privacy-preserving stable diffusion inference important?</b>
 
 								<p class="answer">
-									In the senario of AI as a service (AIaaS), tasks like texts to images will be applied by majority of users. However, high complexity prevent users from local computation. 
-									The input prompts and the output images may contains users private information, which makes significant risks in hosting computing done on untrusted servers.
-									Privacy-preserving stable diffusion inference aims to protect privace data while utilizing the computation resources of servers.
+									In the scenario of AI as a service (AIaaS), features such as text-to-image conversion have gained widespread popularity among users. Yet, the high computational demands of these tasks often preclude local processing, compelling users to rely on external servers. This reliance raises substantial privacy concerns, as both the input prompts and the resulting images can contain sensitive personal information. Exposing this data on potentially unsecured servers introduces significant risks. To address these concerns, privacy-preserving stable diffusion inference has been developed. This approach seeks to safeguard private data while still leveraging the computational power of external servers, offering a balanced solution to maintain privacy without sacrificing functionality.
 												</p>
 							<b> How does HE-diffusion work?</b>
 
 								<p class="answer">
-									HE-diffusion applied homomorphic encryption to protect sensitive data. For inputs, users should encode the prompts and do several layers
-									of the model forward. Homomorphic encryption works during denoising to protect outputs. Users can achieve privacy-preserving computation on servers by HE-diffusion.
+									HE-diffusion utilizes homomorphic encryption to secure sensitive data throughout the computational process. To initiate this, users are required to encode their prompts, after which the model performs several forward layers of processing. The unique aspect of homomorphic encryption is its application during the denoising phase to ensure the protection of outputs. By employing HE-diffusion, users are empowered to conduct privacy-preserving computations on external servers, effectively safeguarding their data while leveraging the computational resources of these servers.
 									
 												</p>
-							<b> Will the generation ability be reduced due to privacy protection? </b>
+							<b> Will the generation capability be degraded as a result of privacy protection? </b>
 								<p class="answer">
-								HE-diffusion can generate images with ignorable loss compared with original stable diffusion. The only approximation happens at the encryption step due to the property of CKKS encryption scheme.
-								In the whole computation process, we only do optimizations which do not change the results and precision.
+								HE-diffusion is capable of generating images with negligible loss in quality compared to the original stable diffusion model. The only instance of approximation occurs during the encryption step, attributable to the characteristics of the CKKS encryption scheme. Throughout the entire computational process, optimizations are carefully implemented in a manner that preserves both the results and their precision, ensuring that the integrity of the output remains uncompromised.
 													
 																</p>
 							
@@ -128,9 +113,7 @@
 							<p> Results from stable diffusion and HE-diffusion</p>
 							<b> Can HE-diffusion inference be as fast as stable diffusion? </b>
 								<p class="answer">
-								HE-diffusion has a similar performance with the original stable diffusion. Homomorphic encryption works during denoising, where the computation is not that heavy.
-								Furthermore, we utilized a series of optimizations including partial encryption. Finally, the inference times of HE-diffusion and stable diffusion are at the same order of magnitude.
-													
+								HE-diffusion delivers performance comparable to the original stable diffusion. Homomorphic encryption works during the denoising phase where computational demands are relatively moderate.  Additionally, the implementation of strategic optimizations, such as partial encryption, further enhances efficiency. As a result of these measures, the inference times for HE-diffusion and the original stable diffusion model are similar, falling within the same order of magnitude.
 																</p>
 					<table>
   				<tr>
@@ -138,7 +121,7 @@
     			  <th>Plain</th>
   				  <th>Enc</th>
 				  <th>Enc_opt</th>
-				  <th>Sparse</th>
+				  <th>HE-Diffusion (Sparse)</th>
   				</tr>
 
 					<tr>
